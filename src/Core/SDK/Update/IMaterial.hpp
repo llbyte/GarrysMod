@@ -13,4 +13,8 @@ public:
 		return Call<const char*>( this, 1 );
 	}
 
+	void IncrementReferenceCount( ) {
+		return Call<void>( this, 12 );
+	}
+
 };

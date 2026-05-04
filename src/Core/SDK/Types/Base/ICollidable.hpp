@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/Math/Vector.hpp>
+
 class ICollidable {
 protected:
     virtual ~ICollidable() = default;

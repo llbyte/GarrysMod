@@ -12,6 +12,7 @@
 #include "Methods/Hook_PaintTraverse.hpp"
 #include "Methods/Hook_RenderView.hpp"
 #include "Methods/Hook_CreateMove.hpp"
+#include "Methods/Hook_DrawModelExecute.hpp"
 
 static CHooker g_CHooker{};
 
@@ -39,11 +40,11 @@ auto CHooker::InstallSecondHook() -> bool {
             reinterpret_cast<LPVOID>( &Hook_CreateMove ),
             reinterpret_cast<LPVOID*>( &CreateMove_o )
         },
-        // {
-        //     { "Test", "48 83 EC ? 48 8B 44 24 ? ? ? ? 48 89 44 24", MATERIAL_SYSTEM_DLL },
-        //     reinterpret_cast<LPVOID>( &Hook_FindMaterial ),
-        //     reinterpret_cast<LPVOID*>( &FindMaterial_o )
-        // },
+        {
+            { "CModelRender:::DrawModelExecute", "40 55 53 56 41 54 41 55 41 56 41 57", ENGINE_DLL },
+            reinterpret_cast<LPVOID>( &Hook_DrawModelExecute ),
+            reinterpret_cast<LPVOID*>( &DrawModelExecute_o )
+        },
         {
             { "VPanel::PaintTraverse", "48 89 5C 24 ? 57 48 83 EC ? ? ? ? 41 0F B6 D9", VGUI2_DLL },
             reinterpret_cast<LPVOID>( &Hook_PaintTraverse ),

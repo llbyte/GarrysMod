@@ -2,7 +2,6 @@
 
 #include <imgui.h>
 
-#include "Common/Log/CLog.hpp"
 #include "Core/SDK/SDK.hpp"
 #include "Core/SDK/Types/C_BaseEntity.hpp"
 
@@ -64,9 +63,13 @@ auto CCheatMenu::OnRenderMenu() -> void {
         if (!coll)
             continue;
 
-        const Vector3 origin = pPlayer->GetClientRenderable()->GetRenderOrigin();
-        const Vector3 mins = coll->OBBMins();
-        const Vector3 maxs = coll->OBBMaxs();
+        auto* rend = pPlayer->GetClientRenderable();
+        if (!rend)
+            continue;
+
+        const Vector3 origin = rend->GetRenderOrigin();
+        Vector3 mins, maxs;
+        rend->GetRenderBounds(mins, maxs);
 
         const Vector3 points[8] = {
             { origin.x + mins.x, origin.y + mins.y, origin.z + mins.z },

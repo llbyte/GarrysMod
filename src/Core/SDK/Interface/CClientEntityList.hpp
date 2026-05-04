@@ -1,9 +1,9 @@
 #pragma once
 
-#define CLIENT_ENTITYLIST_VERSION "VClientEntityList003"
-#include "Core/SDK/Types/Base/IClientNetworkable.hpp"
+#include <Core/SDK/Types/C_BaseEntity.hpp>
+#include <Core/SDK/Types/Base/IClientNetworkable.hpp>
 
-class C_BaseEntity;
+#define CLIENT_ENTITYLIST_VERSION "VClientEntityList003"
 
 class CClientEntityList {
 protected:

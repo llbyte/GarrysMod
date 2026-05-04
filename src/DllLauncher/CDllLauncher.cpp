@@ -68,6 +68,9 @@ auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
 
     // LOG( "TickRate: %f\n", SDK::Pointers::GlobalVars()->GetTickrate() );
 
+    const auto material = SDK::Interfaces::MaterialSystem()->FindMaterial("models/debug/debugwhite", "Model textures");
+    LOG( "Material: %s\n", material->GetName() );
+
     LOG( "[info] Cheat initialized\n" );
 
     // LOG( " Clients: %i", SDK::Interfaces::EngineClient()->GetMaxClients() );

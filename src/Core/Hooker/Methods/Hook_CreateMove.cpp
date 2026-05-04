@@ -2,11 +2,15 @@
 
 auto Hook_CreateMove(
     __int64 a1,
-    __int64 a2,
-    __int64 a3
+    const float flInputSampleTime,
+    CUserCmd* cmd
 ) -> __int64 {
 
-    // LOG("[hook] CreateMove hook called! \n");
+    const auto result = CreateMove_o(a1, flInputSampleTime, cmd);
+    if (!cmd || !cmd->command_number)
+        return result;
 
-    return CreateMove_o(a1, a2, a3);
+    cmd->buttons &= ~CUserCmd::IN_JUMP;
+
+    return result;
 }
