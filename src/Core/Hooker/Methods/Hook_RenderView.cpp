@@ -14,23 +14,23 @@ auto Hook_RenderView(
     // if ( camPos.Zero() )
     //     camPos = view->origin;
 
-    // if (Globals::lastCmd.buttons & IN_SPEED)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::Speed))
     //     speed *= 5.f;
-    // if (Globals::lastCmd.buttons & IN_DUCK)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::Duck))
     //     speed *= 0.5f;
-    // if (Globals::lastCmd.buttons & IN_JUMP)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::Jump))
     //     camPos.z += speed;
     //
-    // if (Globals::lastCmd.buttons & IN_FORWARD)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::Forward))
     //     camPos += (view.angles.toVector() * speed);
     //
-    // if (Globals::lastCmd.buttons & IN_BACK)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::Back))
     //     camPos -= (view.angles.toVector() * speed);
     //
-    // if (Globals::lastCmd.buttons & IN_MOVELEFT)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::MoveLeft))
     //     camPos += (view.angles.SideVector() * speed);
     //
-    // if (Globals::lastCmd.buttons & IN_MOVERIGHT)
+    // if (Globals::lastCmd.buttonFlags & static_cast<int>(CUserCmd::ButtonFlag::MoveRight))
     //     camPos -= (view.angles.SideVector() * speed);
 
     // view->origin = camPos;

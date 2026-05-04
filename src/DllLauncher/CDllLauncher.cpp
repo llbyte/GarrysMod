@@ -2,11 +2,12 @@
 
 #include <Common/Log/CLog.hpp>
 #include <Common/CrashLog/CCrashLog.hpp>
+
 #include <Core/SDK/SDK.hpp>
 #include <Core/Hooker/CHooker.hpp>
+#include <Core/Menu/CMenuRender.hpp>
 #include <Core/SDK/Interface/CClientEntityList.hpp>
 #include <Core/SDK/Interface/CLuaShared.hpp>
-#include <Core/Menu/CMenuRender.hpp>
 
 static CDllLauncher g_CDllLauncher{};
 
@@ -72,9 +73,6 @@ auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
 #undef CHECK_INTERFACE
 
     // LOG( "TickRate: %f\n", SDK::Pointers::GlobalVars()->GetTickrate() );
-
-    const auto material = SDK::Interfaces::MaterialSystem()->FindMaterial( "models/debug/debugwhite", "Model textures" );
-    LOG( "Material: %s\n", material->GetName() );
 
     LOG( "[info] Cheat initialized\n" );
 

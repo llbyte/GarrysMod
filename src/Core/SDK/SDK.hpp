@@ -5,7 +5,6 @@
 #include <Core/SDK/Interface/CClientEntityList.hpp>
 #include <Core/SDK/Interface/CLuaShared.hpp>
 #include <Core/SDK/Interface/CMaterialSystem.hpp>
-#include <Core/SDK/Update/CGlobalVars.hpp>
 #include <Core/SDK/Interface/CEngineClient.hpp>
 
 // Don't touch it. Bullshit but all in all usable atm
@@ -36,20 +35,12 @@ namespace SDK {
         static CLuaShared* g_pLuaShared;
     };
 
-    class Pointers {
-    public:
-        static auto GlobalVars() -> CGlobalVars*;
-
-    private:
-        static CGlobalVars* g_pCGlobalVars;
-    };
-
     class Globals {
     public:
-        static auto ViewMatrix() -> Matrix;
-    private:
-        static Matrix g_pViewMatrix;
+        static auto ViewMatrix() -> Matrix*;
 
+    private:
+        static Matrix g_ViewMatrix;
 
         friend void ::Hook_Paint(void*, int);
 

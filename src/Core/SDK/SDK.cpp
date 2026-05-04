@@ -12,9 +12,7 @@ namespace SDK {
 	CMaterialSystem* Interfaces::g_pMaterialSystem = nullptr;
 	CLuaShared* Interfaces::g_pLuaShared = nullptr;
 
-    CGlobalVars* Pointers::g_pCGlobalVars = nullptr;
-
-	Matrix Globals::g_pViewMatrix;
+	Matrix Globals::g_ViewMatrix{};
 
 	auto Interfaces::ClientEntityList() -> CClientEntityList* {
 		if ( !g_pClientEntityList ) {
@@ -50,30 +48,7 @@ namespace SDK {
 		return g_pLuaShared;
 	}
 
-	auto Pointers::GlobalVars() -> CGlobalVars* {
-		// TODO: Update
-		if ( !g_pCGlobalVars ) {
-			CBasePattern pattern(
-				"GlobalVars",
-				GLOBALVARS_PATTERN,
-				CLIENT_DLL
-			);
-
-			if ( !pattern.Search( false ) ) {
-				LOG( "[error] GlobalVars: Pattern not found\n" );
-				return nullptr;
-			}
-
-			const auto address = reinterpret_cast<uintptr_t>( pattern.GetFunction() );
-			const auto offset = *reinterpret_cast<int32_t*>( address + 3 );
-			g_pCGlobalVars = *reinterpret_cast<CGlobalVars**>( address + 7 + offset );
-		}
-
-		return g_pCGlobalVars;
-	}
-
-
-	auto Globals::ViewMatrix() -> Matrix {
-		return g_pViewMatrix;
+	auto Globals::ViewMatrix() -> Matrix* {
+		return &g_ViewMatrix;
 	}
 }

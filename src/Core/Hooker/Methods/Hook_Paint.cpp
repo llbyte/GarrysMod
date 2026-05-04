@@ -7,7 +7,7 @@ auto Hook_Paint(
     const int mode
 ) -> void {
     if (mode & 1 << 1) {
-        SDK::Globals::g_pViewMatrix = SDK::Interfaces::EngineClient()->WorldToScreenMatrix();
+        SDK::Globals::g_ViewMatrix = SDK::Interfaces::EngineClient()->WorldToScreenMatrix();
     }
 
     return Paint_o(ecx, mode);

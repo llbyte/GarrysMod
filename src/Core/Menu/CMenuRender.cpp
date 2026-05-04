@@ -74,6 +74,16 @@ auto CMenuRender::OnPresent(
         return;
     }
 
+    // patch start
+    ImGui::SetCurrentContext( m_pImGuiContext );
+    auto& io = ImGui::GetIO();
+    if ( !m_bVisible ) {
+        io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        return;
+    }
+    io.ConfigFlags &= ~ImGuiConfigFlags_NoMouseCursorChange;
+    // patchend
+
     IDirect3DStateBlock9* state = nullptr;
     pDevice->CreateStateBlock(D3DSBT_ALL, &state);
     state->Capture();
@@ -101,8 +111,11 @@ LRESULT WINAPI CMenuRender::MenuWndProc(
     const WPARAM wParam,
     const LPARAM lParam
 ) {
-    if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
-        return TRUE;
+    // patch start
+    if ( g_Menu.m_bVisible ) {
+        ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
+    }
+    // patch end
 
     if (uMsg == WM_KEYUP && wParam == VK_INSERT)
         g_Menu.m_bVisible = !g_Menu.m_bVisible;
