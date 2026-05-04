@@ -8,6 +8,12 @@
 #include <Core/SDK/Update/CGlobalVars.hpp>
 #include <Core/SDK/Interface/CEngineClient.hpp>
 
+// Don't touch it. Bullshit but all in all usable atm
+auto Hook_Paint(
+    void* ecx,
+    int mode
+) -> void;
+
 #define CLIENT_DLL "client.dll"
 #define ENGINE_DLL "engine.dll"
 #define VGUI2_DLL "vgui2.dll"
@@ -16,8 +22,6 @@
 #define GAMEOVERLAYRENDER64_DLL "gameoverlayrenderer64.dll"
 
 namespace SDK {
-    extern Matrix ViewMatrix;
-
     class Interfaces {
     public:
         static auto ClientEntityList() -> CClientEntityList*;
@@ -35,10 +39,19 @@ namespace SDK {
     class Pointers {
     public:
         static auto GlobalVars() -> CGlobalVars*;
-        static auto ViewMatrix() -> Matrix*;
 
     private:
         static CGlobalVars* g_pCGlobalVars;
     };
 
+    class Globals {
+    public:
+        static auto ViewMatrix() -> Matrix;
+    private:
+        static Matrix g_pViewMatrix;
+
+
+        friend void ::Hook_Paint(void*, int);
+
+    };
 }

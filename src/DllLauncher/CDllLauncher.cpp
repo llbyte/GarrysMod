@@ -27,7 +27,7 @@ auto CDllLauncher::OnDllMain( const void*, HINSTANCE hInstance ) -> void {
 
     CreateDirectoryA(m_DllDir.c_str(), nullptr);
 
-    CreateThread(
+    const auto handle = CreateThread(
         nullptr,
         0,
         StartCheatThread,
@@ -35,6 +35,11 @@ auto CDllLauncher::OnDllMain( const void*, HINSTANCE hInstance ) -> void {
         0,
         nullptr
     );
+    if ( !handle ) {
+        LOG( "[error] CreateThread\n" );
+        return;
+    }
+    CloseHandle( handle );
 }
 
 auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
@@ -68,7 +73,7 @@ auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
 
     // LOG( "TickRate: %f\n", SDK::Pointers::GlobalVars()->GetTickrate() );
 
-    const auto material = SDK::Interfaces::MaterialSystem()->FindMaterial("models/debug/debugwhite", "Model textures");
+    const auto material = SDK::Interfaces::MaterialSystem()->FindMaterial( "models/debug/debugwhite", "Model textures" );
     LOG( "Material: %s\n", material->GetName() );
 
     LOG( "[info] Cheat initialized\n" );
@@ -81,7 +86,7 @@ auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
 
     FreeLibraryAndExitThread(
         GetDllLauncher()->GetDllImage(),
-        0
+        EXIT_SUCCESS
     );
 
     return true;

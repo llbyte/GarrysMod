@@ -7,14 +7,14 @@
 #include <Core/SDK/Interface/Interface.hpp>
 
 namespace SDK {
-	Matrix ViewMatrix{};
-
 	CClientEntityList* Interfaces::g_pClientEntityList = nullptr;
 	CEngineClient* Interfaces::g_pEngineClient = nullptr;
 	CMaterialSystem* Interfaces::g_pMaterialSystem = nullptr;
 	CLuaShared* Interfaces::g_pLuaShared = nullptr;
 
     CGlobalVars* Pointers::g_pCGlobalVars = nullptr;
+
+	Matrix Globals::g_pViewMatrix;
 
 	auto Interfaces::ClientEntityList() -> CClientEntityList* {
 		if ( !g_pClientEntityList ) {
@@ -72,7 +72,8 @@ namespace SDK {
 		return g_pCGlobalVars;
 	}
 
-	auto Pointers::ViewMatrix() -> Matrix * {
-		return &SDK::ViewMatrix;
+
+	auto Globals::ViewMatrix() -> Matrix {
+		return g_pViewMatrix;
 	}
 }
