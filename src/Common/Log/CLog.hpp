@@ -24,4 +24,4 @@ private:
 
 auto GetLog() -> CLog*;
 
-#define LOG( fmt, ... ) GetLog()->AddLog( fmt, __VA_ARGS__ )
+#define LOG( ... ) GetLog()->AddLog( __VA_ARGS__ )

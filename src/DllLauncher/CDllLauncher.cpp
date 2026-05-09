@@ -1,6 +1,7 @@
 #include "CDllLauncher.hpp"
 
 #include <Common/Log/CLog.hpp>
+#include <Common/Config/CConfig.hpp>
 #include <Common/CrashLog/CCrashLog.hpp>
 
 #include <Core/SDK/SDK.hpp>
@@ -46,6 +47,11 @@ auto CDllLauncher::OnDllMain( const void*, HINSTANCE hInstance ) -> void {
 auto WINAPI CDllLauncher::StartCheatThread( LPVOID ) -> DWORD {
     GetCrashLog()->Initialize();
 	GetLog()->Initialize();
+
+    if ( !GetConfig()->Initialize() ) {
+        LOG( "[error] Initialize Config\n" );
+        return false;
+    }
 
     if ( !GetHooker()->Initialize() ) {
         LOG( "[error] Hooker: Initialize\n" );
@@ -94,9 +100,9 @@ auto CDllLauncher::OnDestroy() -> void {
     std::call_once(
         m_bDestroyed,
         [] {
-            GetLog()->Destroy();
             GetHooker()->Destroy();
             GetMenuRender()->Destroy();
+            GetLog()->Destroy();
             GetCrashLog()->Destroy();
         }
     );
