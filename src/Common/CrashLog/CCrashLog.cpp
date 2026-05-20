@@ -60,8 +60,12 @@ auto WINAPI CCrashLog::VectoredExceptionHandler( PEXCEPTION_POINTERS pExceptionI
         ExceptionCode == STATUS_STACK_OVERFLOW ||
         ExceptionCode == STATUS_BREAKPOINT
     ) {
-	    if (const auto hProcess = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ , false , GetCurrentProcessId() ) ) {
-
+    	const auto hProcess = OpenProcess(
+    		PROCESS_QUERY_INFORMATION | PROCESS_VM_READ ,
+    		false ,
+    		GetCurrentProcessId()
+    	);
+	    if ( hProcess ) {
             char CrashModuleNameTmp[MAX_PATH] = {};
 
             if ( GetMappedFileNameA( hProcess , ExceptionAddress , CrashModuleNameTmp , MAX_PATH ) > 0 ) {
@@ -190,7 +194,10 @@ auto CCrashLog::IsCrashCheat( PVOID Address ) -> bool {
 	const auto CheatStart = GetDllLauncher()->GetDllImage();
 	const auto CheatEnd = CheatStart + GetDllLauncher()->GetSizeOfImage();
 
-	if ( reinterpret_cast<uintptr_t>(Address) > reinterpret_cast<uintptr_t>(CheatStart) && reinterpret_cast<uintptr_t>(Address) < reinterpret_cast<uintptr_t>(CheatEnd) )
+	if (
+		reinterpret_cast<uintptr_t>(Address) > reinterpret_cast<uintptr_t>(CheatStart) &&
+		reinterpret_cast<uintptr_t>(Address) < reinterpret_cast<uintptr_t>(CheatEnd)
+	)
 		return true;
 
 	return false;
